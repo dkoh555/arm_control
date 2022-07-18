@@ -1,12 +1,17 @@
 <launch>
   
   <!-- required inputs when calling file -->
+  <arg name="robot_ip" />
   <arg name="robot_dof" />
 
   <!-- calls the original xarm_planner_file -->
   <include file="$(find xarm_planner)/launch/xarm_planner_realHW.launch">
     <arg name="robot_ip" value="$(arg robot_ip)" />
-    <arg name="robot_dof" value="$(arg robot_dof)" />
+    <arg name="robot_dof" value="6" />
   </include>
   
+  <!-- node name="control_server_node" pkg="arm_control" type="control_server_node" output="screen" / -->
+  <node name="control_server_node" pkg="arm_control" type="control_server_node" launch-prefix="gnome-terminal --command" />
+  <node name="control_client_node" pkg="arm_control" type="control_client_node" launch-prefix="gnome-terminal --command" />
+
 </launch>
