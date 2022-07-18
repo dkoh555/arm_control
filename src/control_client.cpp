@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <iostream>
 
+// Testing changes
+
 // Once trajectory has been plotted, user will confirm whether execute it
 // 1 = successful, 2 = arm movement cancelled, 3 = arm movement encountered error, 4 = server unable to connect
 int confirmation_function()
