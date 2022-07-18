@@ -1,0 +1,12 @@
+<launch>
+  
+  <!-- required inputs when calling file -->
+  <arg name="robot_dof" />
+
+  <!-- calls the original xarm_planner_file -->
+  <include file="$(find xarm_planner)/launch/xarm_planner_realHW.launch">
+    <arg name="robot_ip" value="$(arg robot_ip)" />
+    <arg name="robot_dof" value="$(arg robot_dof)" />
+  </include>
+  
+</launch>
