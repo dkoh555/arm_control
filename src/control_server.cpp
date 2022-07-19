@@ -9,6 +9,11 @@
 
 #include <iostream>
 
+// Factor in input coordinate difference due to xArm base coordinates
+float base_x = 0.0;
+float base_y = 0.0;
+float base_z = 0.372;
+
 // Initialise coordinate variables
 float x_coord;
 float y_coord;
@@ -52,9 +57,9 @@ bool return_to_start(void)
   xarm_planner::pose_plan srv6;
 
   // Raising xArm after picking up trash
-  srv6.request.target.position.x  = 0.25;
-  srv6.request.target.position.y  = 0.0;
-  srv6.request.target.position.z  = 0.25;
+  srv6.request.target.position.x  = base_x + 0.25;
+  srv6.request.target.position.y  = base_y + 0.0;
+  srv6.request.target.position.z  = base_z + 0.5;
 
   srv6.request.target.orientation.x  = 1.0;
   srv6.request.target.orientation.y  = 0.0;
@@ -73,14 +78,16 @@ bool return_to_start(void)
       xarm_planner::single_straight_plan srv7;
 
       // Setting xArm to optimum camera angle
-      srv7.request.target.position.x  = 0.25;
-      srv7.request.target.position.y  = 0.0;
-      srv7.request.target.position.z  = 0.25;
+      srv7.request.target.position.x  = base_x + 0.25;
+      srv7.request.target.position.y  = base_y + 0.0;
+      srv7.request.target.position.z  = base_z + 0.5;
 
-      srv7.request.target.orientation.x  = 1.0;
-      srv7.request.target.orientation.y  = 0.0;
-      srv7.request.target.orientation.z  = 2.0;
-      srv7.request.target.orientation.w  = 0.0;
+      srv7.request.target.orientation.x  = 0.0;
+      //srv7.request.target.orientation.x  = 1.0;
+      srv7.request.target.orientation.y  = 0.924;
+      srv7.request.target.orientation.z  = 0.0;
+      //srv7.request.target.orientation.z  = 2.0;
+      srv7.request.target.orientation.w  = 0.383;
       
       if(client_request5.call(srv7))
       {
@@ -122,12 +129,12 @@ bool keep_trash(void)
   xarm_planner::pose_plan srv5;
 
   // Raising xArm after picking up trash
-  srv5.request.target.position.x  = x_coord;
-  srv5.request.target.position.y  = y_coord;
-  srv5.request.target.position.z  = 0.35;
+  srv5.request.target.position.x  = base_x + x_coord;
+  srv5.request.target.position.y  = base_y + y_coord;
+  srv5.request.target.position.z  = base_z + 0.2;
 
-  srv5.request.target.orientation.x  = 1.0;
-  srv5.request.target.orientation.y  = 0.0;
+  srv5.request.target.orientation.x  = 0.0;
+  srv5.request.target.orientation.y  = 1.0;
   srv5.request.target.orientation.z  = 0.0;
   srv5.request.target.orientation.w  = 0.0;
 
@@ -140,19 +147,19 @@ bool keep_trash(void)
       execute();
 
       // Moving xArm above trashbin to drop trash
-      srv5.request.target.position.x  = -0.3;
+      srv5.request.target.position.x  = base_x -0.435;
       if(y_coord >= 0)
       {
-        srv5.request.target.position.y  = 0.05;
+        srv5.request.target.position.y  = base_y + 0.05;
       }
       else
       {
-        srv5.request.target.position.y  = -0.05;
+        srv5.request.target.position.y  = base_y -0.05;
       }
-      srv5.request.target.position.z  = 0.35;
+      srv5.request.target.position.z  = base_z + 0.2;
 
-      srv5.request.target.orientation.x  = 1.0;
-      srv5.request.target.orientation.y  = 0.0;
+      srv5.request.target.orientation.x  = 0.0;
+      srv5.request.target.orientation.y  = 1.0;
       srv5.request.target.orientation.z  = 0.0;
       srv5.request.target.orientation.w  = 0.0;
 
@@ -207,8 +214,8 @@ bool test1(arm_control::move_request::Request  &req,
   srv3.request.target.position.y  = y_coord;
   srv3.request.target.position.z  = z_coord;
 
-  srv3.request.target.orientation.x  = 1.0;
-  srv3.request.target.orientation.y  = 0.0;
+  srv3.request.target.orientation.x  = 0.0;
+  srv3.request.target.orientation.y  = 1.0;
   srv3.request.target.orientation.z  = 0.0;
   srv3.request.target.orientation.w  = 0.0;
 
