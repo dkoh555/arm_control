@@ -8,6 +8,7 @@
   <include file="$(find xarm_planner)/launch/xarm_planner_realHW.launch">
     <arg name="robot_ip" value="$(arg robot_ip)" />
     <arg name="robot_dof" value="6" />
+    <arg name="add_gripper" value="true" />
   </include>
   
   <!-- node name="control_server_node" pkg="arm_control" type="control_server_node" output="screen" / -->
