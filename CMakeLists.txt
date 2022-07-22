@@ -106,7 +106,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES arm_control
-  CATKIN_DEPENDS roscpp rospy std_msgs mod_old_xarm_ros
+  CATKIN_DEPENDS roscpp rospy std_msgs mod_old_xarm_ros gripper_control
 #  DEPENDS system_lib
 )
 

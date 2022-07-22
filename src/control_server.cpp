@@ -7,6 +7,8 @@
 #include <xarm_planner/single_straight_plan.h>
 #include <xarm_planner/exec_plan.h>
 
+#include <gripper_control/grip.h>
+
 #include <iostream>
 
 // Factor in input coordinate difference due to xArm base coordinates
@@ -18,6 +20,32 @@ float base_z = 0.372;
 float x_coord;
 float y_coord;
 float z_coord;
+
+// To track whether arm is set to its start position at startup
+//bool calibrated = false;
+
+bool grip_command(int dec)
+{
+  ros::NodeHandle n6;
+  ros::ServiceClient client_request6 = n6.serviceClient<gripper_control::grip>("gripper");
+  gripper_control::grip srv8;
+
+  srv8.request.decision = dec;
+  
+  client_request6.waitForExistence();
+
+  if(client_request6.call(srv8))
+  {
+    ROS_INFO("Gripper command completed");
+  }
+  else // If unable to connect to service, return an error message
+  {
+    ROS_ERROR("Failed to call service grip to gripper");
+    return false;
+  }
+
+  return true;
+}
 
 bool execute(void)
 {
@@ -65,6 +93,10 @@ bool return_to_start(void)
   srv6.request.target.orientation.y  = 0.0;
   srv6.request.target.orientation.z  = 0.0;
   srv6.request.target.orientation.w  = 0.0;
+
+  grip_command(1);
+  
+  client_request4.waitForExistence();
 
   if(client_request4.call(srv6))
   {
@@ -171,6 +203,9 @@ bool keep_trash(void)
         {
           ROS_INFO("TEST: return path P2 successful");
           execute();
+
+          grip_command(1);
+
           return true;
         }
         else
@@ -264,6 +299,8 @@ bool test2(arm_control::move_confirmation::Request  &req,
     if(srv4.response.success)
     {
       ROS_INFO("TEST: Arm trajectory execution success");
+
+      grip_command(0);
       
       bool success = false;
       if(keep_trash())
@@ -294,7 +331,12 @@ int main(int argc, char **argv)
   // Initialise node
   ros::init(argc, argv, "control_server_node");
   ros::NodeHandle n;
-  
+
+  // Set arm to start position
+  return_to_start();
+  ROS_INFO("ARM SET TO START POSITION");
+
+
   // Initialise services to receive both client requests
   ros::ServiceServer service1 = n.advertiseService("take_coord", test1);
   ros::ServiceServer service2 = n.advertiseService("confirm_coord", test2);
