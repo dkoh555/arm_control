@@ -110,17 +110,21 @@ bool return_to_start(void)
       xarm_planner::single_straight_plan srv7;
 
       // Setting xArm to optimum camera angle
-      srv7.request.target.position.x  = base_x + 0.3;
+      srv7.request.target.position.x  = base_x + 0.2;
       srv7.request.target.position.y  = base_y + 0.0;
       srv7.request.target.position.z  = base_z + 0.5;
 
-      srv7.request.target.orientation.x  = 0.0;
+      srv7.request.target.orientation.x  = 0.985;
       //srv7.request.target.orientation.x  = 0.0;
-      srv7.request.target.orientation.y  = 0.985;
+      //srv7.request.target.orientation.x  = 0.0;
+      srv7.request.target.orientation.y  = 0.0;
+      //srv7.request.target.orientation.y  = 0.985;
       //srv7.request.target.orientation.y  = 0.924;
-      srv7.request.target.orientation.z  = 0.0;
+      srv7.request.target.orientation.z  = 0.174;
       //srv7.request.target.orientation.z  = 0.0;
-      srv7.request.target.orientation.w  = 0.174;
+      //srv7.request.target.orientation.z  = 0.0;
+      srv7.request.target.orientation.w  = 0.0;
+      //srv7.request.target.orientation.w  = 0.174;
       //srv7.request.target.orientation.w  = 0.383;
       
       if(client_request5.call(srv7))
