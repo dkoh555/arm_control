@@ -30,9 +30,9 @@ bool grip_command(int dec)
   ros::ServiceClient client_request6 = n6.serviceClient<gripper_control::grip>("gripper");
   gripper_control::grip srv8;
 
-  srv8.request.decision = dec;
-  
   client_request6.waitForExistence();
+
+  srv8.request.decision = dec;
 
   if(client_request6.call(srv8))
   {
@@ -84,6 +84,8 @@ bool return_to_start(void)
   ros::ServiceClient client_request4 = n4.serviceClient<xarm_planner::pose_plan>("xarm_pose_plan");
   xarm_planner::pose_plan srv6;
 
+  client_request4.waitForExistence();
+
   // Raising xArm after picking up trash
   srv6.request.target.position.x  = base_x + 0.2;
   srv6.request.target.position.y  = base_y + 0.0;
@@ -95,8 +97,6 @@ bool return_to_start(void)
   srv6.request.target.orientation.w  = 0.0;
 
   grip_command(1);
-  
-  client_request4.waitForExistence();
 
   if(client_request4.call(srv6))
   {
