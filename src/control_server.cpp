@@ -169,7 +169,7 @@ bool keep_trash(void)
   // Raising xArm after picking up trash
   srv5.request.target.position.x  = base_x + x_coord;
   srv5.request.target.position.y  = base_y + y_coord;
-  srv5.request.target.position.z  = base_z + 0.2;
+  srv5.request.target.position.z  = base_z + 0.3;
 
   srv5.request.target.orientation.x  = 1.0;
   srv5.request.target.orientation.y  = 0.0;
@@ -185,16 +185,16 @@ bool keep_trash(void)
       execute();
 
       // Moving xArm above trashbin to drop trash
-      srv5.request.target.position.x  = base_x -0.435;
+      srv5.request.target.position.x  = base_x - 0.44;
       if(y_coord >= 0)
       {
         srv5.request.target.position.y  = base_y + 0.05;
       }
       else
       {
-        srv5.request.target.position.y  = base_y -0.05;
+        srv5.request.target.position.y  = base_y - 0.05;
       }
-      srv5.request.target.position.z  = base_z + 0.2;
+      srv5.request.target.position.z  = base_z + (0.8 - base_z);
 
       srv5.request.target.orientation.x  = 0.0;
       srv5.request.target.orientation.y  = 1.0;
