@@ -18,9 +18,10 @@
   <node name="control_client_node" pkg="arm_control" type="control_client_node" launch-prefix="gnome-terminal --command" />
 
   <!-- calls the trash_picker_vision files -->
-  <include file="$(find trash_picker_vision)/realsense-ros/realsense2_camera/launch/rs_camera.launch">
-    <arg name="align_depth" value="true">
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="align_depth" value="true" />
   </include>
-  <include file="$(find trash_picker_vision)/yolov5_ros/launch/yolov5.launch" />
+
+  <include file="$(find yolov5_ros)/launch/yolov5.launch" />
   
 </launch>
