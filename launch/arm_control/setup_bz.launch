@@ -30,6 +30,6 @@
     <arg name="align_depth" value="$(arg align_depth)" />
   </include>
 
-  <include file="$(find yolov5_ros)/launch/yolov5.launch" />
+  <include file="$(find yolov5_ros)/launch/bz_yolov5.launch" />
   
 </launch>

@@ -169,7 +169,7 @@ bool keep_trash(void)
   // Raising xArm after picking up trash
   srv5.request.target.position.x  = base_x + x_coord;
   srv5.request.target.position.y  = base_y + y_coord;
-  srv5.request.target.position.z  = base_z + 0.3;
+  srv5.request.target.position.z  = base_z + 0.2;
 
   srv5.request.target.orientation.x  = 1.0;
   srv5.request.target.orientation.y  = 0.0;
