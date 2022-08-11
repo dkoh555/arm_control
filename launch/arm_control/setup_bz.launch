@@ -1,11 +1,11 @@
 <launch>
-  
+
   <!-- required inputs when calling file -->
   <arg name="robot_ip" />
   <arg name="additional_terminals" default="false" />
   <arg name="align_depth" default="true" />
 
-    <!-- calls the original xarm_planner_file for moveit -->
+  <!-- calls the original xarm_planner_file for moveit -->
   <include file="$(find xarm_planner)/launch/xarm_planner_realHW.launch">
     <arg name="robot_ip" value="$(arg robot_ip)" />
     <arg name="robot_dof" value="6" />
@@ -17,13 +17,13 @@
     <node name="control_server_node" pkg="arm_control" type="control_server_node" launch-prefix="gnome-terminal --command" />
     <node name="control_client_node" pkg="arm_control" type="control_client_node" launch-prefix="gnome-terminal --command" />
     <node name="ezgripper_control" pkg="gripper_control" type="ezgripper_control.py" launch-prefix="gnome-terminal --command" />
-  </group >
+  </group>
 
   <group unless="$(arg additional_terminals)" >
     <node name="control_server_node" pkg="arm_control" type="control_server_node" />
     <node name="control_client_node" pkg="arm_control" type="control_client_node" />
     <node name="ezgripper_control" pkg="gripper_control" type="ezgripper_control.py" />
-  </group >
+  </group>
 
   <!-- calls the trash_picker_vision files -->
   <include file="$(find realsense2_camera)/launch/rs_camera.launch">
@@ -31,5 +31,6 @@
   </include>
 
   <include file="$(find yolov5_ros)/launch/bz_yolov5.launch" />
-  
+
+
 </launch>
