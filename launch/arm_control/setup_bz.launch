@@ -15,13 +15,11 @@
   <!-- calls the arm_control files and ezgripper_control file -->
   <group if="$(arg additional_terminals)" >
     <node name="control_server_node" pkg="arm_control" type="control_server_node" launch-prefix="gnome-terminal --command" />
-    <node name="control_client_node" pkg="arm_control" type="control_client_node" launch-prefix="gnome-terminal --command" />
     <node name="ezgripper_control" pkg="gripper_control" type="ezgripper_control.py" launch-prefix="gnome-terminal --command" />
   </group>
 
   <group unless="$(arg additional_terminals)" >
     <node name="control_server_node" pkg="arm_control" type="control_server_node" />
-    <node name="control_client_node" pkg="arm_control" type="control_client_node" />
     <node name="ezgripper_control" pkg="gripper_control" type="ezgripper_control.py" />
   </group>
 

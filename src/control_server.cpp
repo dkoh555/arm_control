@@ -52,6 +52,8 @@ bool execute(void)
   ros::NodeHandle n5;
   ros::ServiceClient client_request5 = n5.serviceClient<xarm_planner::exec_plan>("xarm_exec_plan");
   xarm_planner::exec_plan srv7;
+  
+  client_request5.waitForExistence();
 
   srv7.request.exec = true;
 
@@ -114,15 +116,19 @@ bool return_to_start(void)
       srv7.request.target.position.y  = base_y + 0.0;
       srv7.request.target.position.z  = base_z + 0.5;
 
+      //srv7.request.target.orientation.x  = 1;
       srv7.request.target.orientation.x  = 0.985;
       //srv7.request.target.orientation.x  = 0.0;
       //srv7.request.target.orientation.x  = 0.0;
+      //srv7.request.target.orientation.y  = 0.0;
       srv7.request.target.orientation.y  = 0.0;
       //srv7.request.target.orientation.y  = 0.985;
       //srv7.request.target.orientation.y  = 0.924;
+      //srv7.request.target.orientation.z  = 0.0;
       srv7.request.target.orientation.z  = 0.174;
       //srv7.request.target.orientation.z  = 0.0;
       //srv7.request.target.orientation.z  = 0.0;
+      //srv7.request.target.orientation.w  = 0.0;
       srv7.request.target.orientation.w  = 0.0;
       //srv7.request.target.orientation.w  = 0.174;
       //srv7.request.target.orientation.w  = 0.383;
