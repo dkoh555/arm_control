@@ -1,29 +1,33 @@
+<!-- THIS FILE LAUNCHES ALL THE NECESSARY PROGRAMS TO RUN THE TRASH_PICKER ROBOT AS INTENDED -->
+
 <launch>
 
-  <!-- required inputs when calling file -->
+  <!-- required (and optional) inputs when calling file -->
   <arg name="robot_ip" />
   <arg name="additional_terminals" default="false" />
   <arg name="align_depth" default="true" />
 
-  <!-- calls the original xarm_planner_file for moveit -->
+  <!-- calls the original xarm_planner from mod_old_xarm_ros for xarm control -->
   <include file="$(find xarm_planner)/launch/xarm_planner_realHW.launch">
     <arg name="robot_ip" value="$(arg robot_ip)" />
     <arg name="robot_dof" value="6" />
     <arg name="add_gripper" value="true" />
   </include>
   
-  <!-- calls the arm_control files and ezgripper_control file -->
-  <group if="$(arg additional_terminals)" >
-    <node name="control_server_node" pkg="arm_control" type="control_server_node" launch-prefix="gnome-terminal --command" />
-    <node name="ezgripper_control" pkg="gripper_control" type="ezgripper_control.py" launch-prefix="gnome-terminal --command" />
-  </group>
-
+  <!-- calls the arm_control and ezgripper_control files to broadcast commands to the xarm_planner and gripper controller respectively -->
   <group unless="$(arg additional_terminals)" >
     <node name="control_server_node" pkg="arm_control" type="control_server_node" />
     <node name="ezgripper_control" pkg="gripper_control" type="ezgripper_control.py" />
   </group>
+  
+  <!-- if you want to view additional info on the xarm and gripper in real time, and manually input the coordinates the arm picks up items -->  
+  <group if="$(arg additional_terminals)" >
+    <node name="control_server_node" pkg="arm_control" type="control_server_node" launch-prefix="gnome-terminal --command" />
+    <node name="control_client_node" pkg="arm_control" type="control_client_node" launch-prefix="gnome-terminal --command" />
+    <node name="ezgripper_control" pkg="gripper_control" type="ezgripper_control.py" launch-prefix="gnome-terminal --command" />
+  </group>
 
-  <!-- calls the trash_picker_vision files -->
+  <!-- calls the trash_picker_vision files for camera initialisation and object detection -->
   <include file="$(find realsense2_camera)/launch/rs_camera.launch">
     <arg name="align_depth" value="$(arg align_depth)" />
   </include>

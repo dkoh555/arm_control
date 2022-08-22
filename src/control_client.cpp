@@ -1,3 +1,6 @@
+/*
+This code simply allows you to manually input the coordinates you would like the xarm to pick up an object via the keyboard.
+*/
 
 #include "ros/ros.h"
 #include "arm_control/move_request.h"
